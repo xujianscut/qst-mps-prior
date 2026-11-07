@@ -155,3 +155,40 @@ $n$ & ensemble & network (fixed) & MLE (fixed) & MAP (fixed) & coverage (\%) \\
 open(os.path.join(O, 'tab_obs.tex'), 'w').write(tab)
 print("basis n6: MAP maeH %.4f, MLE %.4f, net %.4f | direct n6 %.4f n10 %.4f" % (bm['map']['maeH'], bm['mle']['maeH'], bm['net']['maeH'], mb6['direct']['maeH'], mb10['direct']['maeH']))
 print("written:", [f for f in os.listdir(O) if f.startswith('tab_')])
+
+# ---------------- second family (disordered Ising ground states) ----------------
+irow = []
+for n in NS:
+    for i, S in enumerate([50, 200]):
+        r = J(f"rescue_n{n}_local_S{S}_tfim.json"); t = r['test']; c = r['controls']
+        g = J(f"gate_chi2_n{n}_S{S}_q0.9_tfim.json"); gt = [x for x in g['rows'] if x['kind'] == 'test'][0]
+        assert abs(gt['map_fid'] - t['map']['fid']) < 2e-3
+        best = max([t[k]['fid'] for k in ['net', 'mle', 'warm', 'fam', 'map']] + [gt['gated_fid']])
+        bf = lambda v: (r"\textbf{%s}" % f3(v)) if f3(v) == f3(best) else f3(v)
+        lead = (r"\multirow{2}{*}{%d}" % n) if i == 0 else ""
+        irow.append(f"{lead} & {S} & {f3(c['prior_only'])} & {f3(c['shuffled'])} & {bf(t['net']['fid'])} & {bf(t['mle']['fid'])} & "
+                    f"{bf(t['warm']['fid'])} & {bf(t['fam']['fid'])} & {bf(t['map']['fid'])} & {bf(gt['gated_fid'])} & "
+                    f"${t['map']['delta_vs_mle']:+.3f}\\,({t['map']['delta_se']*1e3:.0f})$ & {t['map']['win_frac']*100:.0f}\\% \\\\")
+    if n != NS[-1]: irow.append(r"\midrule")
+tab = r"""\begin{table}[tbp]
+\caption{Second family: ground states of disordered Ising chains with random longitudinal fields
+(section~\ref{sec:ising}), \texttt{local} design, independent measurement model, $200$ test states, all
+hyperparameters chosen on a validation set. Columns as in tables~\ref{tab:controls} and~\ref{tab:main}.}
+\label{tab:ising}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrcccccccccc}
+\toprule
+$n$ & $S$ & prior-only & shuffled & network & MLE & warm & family & MAP & gated & MAP$-$MLE (SE) & wins \\
+\midrule
+""" + "\n".join(irow) + r"""
+\bottomrule
+\end{tabular}
+\end{table}
+"""
+open(os.path.join(O, 'tab_ising.tex'), 'w').write(tab)
+for n in NS:
+    g = J(f"gate_chi2_n{n}_S200_q0.9_tfim.json")
+    print(f"ising gate n={n}: " + " | ".join(f"{x['kind']}={x['val']}: to-MLE {x['gated_frac']*100:.0f}% mle {x['mle_fid']:.3f} map {x['map_fid']:.3f} gated {x['gated_fid']:.3f} cov mle/map/gated {x['mle_cov']*100:.0f}/{x['map_cov']*100:.0f}/{x['gated_cov']*100:.0f}" for x in g['rows']))
+print("written tab_ising.tex")
