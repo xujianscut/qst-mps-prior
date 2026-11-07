@@ -1,0 +1,35 @@
+{
+ "6": {
+  "net_B200_ms_per_state": 0.012485980987548828,
+  "mle_B200_ms_per_state": 8.225897550582886,
+  "map_B200_ms_per_state": 4.928064346313477,
+  "net_B1_ms_per_state": 1.4188289642333984,
+  "mle_B1_ms_per_state": 1862.9133701324463,
+  "map_B1_ms_per_state": 1088.2878303527832,
+  "T_mle": 100,
+  "T_map": 50,
+  "lam": 0.1
+ },
+ "8": {
+  "net_B200_ms_per_state": 0.009670257568359375,
+  "mle_B200_ms_per_state": 9.225684404373169,
+  "map_B200_ms_per_state": 4.978697299957275,
+  "net_B1_ms_per_state": 2.344369888305664,
+  "mle_B1_ms_per_state": 1798.9587783813477,
+  "map_B1_ms_per_state": 1154.9384593963623,
+  "T_mle": 100,
+  "T_map": 50,
+  "lam": 0.03
+ },
+ "10": {
+  "net_B200_ms_per_state": 0.01926422119140625,
+  "mle_B200_ms_per_state": 14.399490356445312,
+  "map_B200_ms_per_state": 15.55821418762207,
+  "net_B1_ms_per_state": 2.9344558715820312,
+  "mle_B1_ms_per_state": 2110.6979846954346,
+  "map_B1_ms_per_state": 1795.2594757080078,
+  "T_mle": 100,
+  "T_map": 100,
+  "lam": 0.03
+ }
+}
