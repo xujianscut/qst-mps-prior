@@ -1,0 +1,10 @@
+{
+  "title": "Code and data for: Learned measurement-conditioned priors for matrix-product-state tomography",
+  "upload_type": "software",
+  "creators": [
+    {"name": "Xu, Jian", "affiliation": "RIKEN Center for Advanced Intelligence Project", "orcid": "0000-0002-0350-5528"}
+  ],
+  "description": "Code, result files and IBM hardware measurement records for the paper 'Learned measurement-conditioned priors for matrix-product-state tomography' (J. Xu, D. Zeng, J. Paisley, Q. Zhao). Includes MAP refinement with a learned measurement-conditioned prior, the chi-squared gate, tuned MLE and classical-shadow baselines, and the scripts that regenerate every table and figure.",
+  "license": "MIT",
+  "keywords": ["quantum state tomography", "matrix product states", "maximum likelihood", "learned priors", "conformal prediction"]
+}
